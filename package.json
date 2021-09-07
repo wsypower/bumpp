@@ -42,7 +42,8 @@
     "coverage": "nyc node_modules/mocha/bin/mocha",
     "upgrade": "npm-check -u && npm audit fix",
     "bump": "node bin/bump.js --tag --push --all",
-    "release": "npm run upgrade && npm run clean && npm run build && npm test && npm run bump"
+    "prepublishOnly": "npm run clean && npm run build",
+    "release": "npm run bump && npm publish"
   },
   "devDependencies": {
     "@jsdevtools/chai-exec": "^2.1.1",
