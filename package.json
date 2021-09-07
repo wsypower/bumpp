@@ -41,7 +41,7 @@
     "test": "mocha && npm run lint",
     "coverage": "nyc node_modules/mocha/bin/mocha",
     "upgrade": "npm-check -u && npm audit fix",
-    "bump": "esno src/cli/index.ts --tag --push --all",
+    "bump": "esno src/cli/run.ts --tag --push --all",
     "prepublishOnly": "npm run clean && npm run build",
     "release": "npm run bump && npm publish"
   },
