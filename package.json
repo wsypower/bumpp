@@ -27,7 +27,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "bump": "bin/bumpp.js"
+    "bumpp": "bin/bumpp.js"
   },
   "files": [
     "bin",
