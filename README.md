@@ -1,3 +1,17 @@
+# bumpp
+
+[![NPM version](https://img.shields.io/npm/v/bumpp?color=a1b858&label=)](https://www.npmjs.com/package/bumpp)
+
+Forked from [`version-bump-prompt`](https://github.com/JS-DevTools/version-bump-prompt)
+
+###### Changes in this fork
+
+- Renamed to `bumpp` - so you can use `npx bumpp` directly
+- Add a new argument `--execute` to execute the command before committing 
+
+<details>
+<summary>Original README</summary>
+
 # Version Bump Prompt
 
 [![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/version-bump-prompt/actions)
@@ -265,3 +279,5 @@ Thanks to these awesome companies for their support of Open Source developers ‚ù
 [![Coveralls](https://jstools.dev/img/badges/coveralls.svg)](https://coveralls.io)
 [![Travis CI](https://jstools.dev/img/badges/travis-ci.svg)](https://travis-ci.com)
 [![SauceLabs](https://jstools.dev/img/badges/sauce-labs.svg)](https://saucelabs.com)
+
+</details>

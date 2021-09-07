@@ -56,6 +56,7 @@ export interface NormalizedOptions {
   cwd: string;
   interface: Interface;
   ignoreScripts: boolean;
+  execute?: string;
 }
 
 /**
@@ -69,6 +70,7 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
   let noVerify = Boolean(raw.noVerify);
   let cwd = raw.cwd || process.cwd();
   let ignoreScripts = Boolean(raw.ignoreScripts);
+  let execute = raw.execute;
 
   let release: Release;
   if (!raw.release || raw.release === "prompt") {
@@ -133,7 +135,7 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
     throw new Error("Cannot prompt for the version number because input or output has been disabled.");
   }
 
-  return { release, commit, tag, push, files, cwd, interface: ui, ignoreScripts };
+  return { release, commit, tag, push, files, cwd, interface: ui, ignoreScripts, execute };
 }
 
 /**

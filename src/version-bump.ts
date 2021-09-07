@@ -1,3 +1,4 @@
+import ezSpawn = require("@jsdevtools/ez-spawn");
 import { getNewVersion } from "./get-new-version";
 import { getOldVersion } from "./get-old-version";
 import { gitCommit, gitPush, gitTag } from "./git";
@@ -53,6 +54,10 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
 
   // Update the version number in all files
   await updateFiles(operation);
+
+  if (operation.options.execute) {
+    await ezSpawn.async(operation.options.execute, { stdio: "inherit" });
+  }
 
   // Run npm version script, if any
   await runNpmScript(NpmScript.Version, operation);

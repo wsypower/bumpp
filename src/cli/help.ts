@@ -39,6 +39,8 @@ options:
 
   -v, --version             Show the version number
 
+  -x, --execute             Excute additional command after bumping and before commiting
+
   -q, --quiet               Suppress unnecessary output
 
   -h, --help                Show usage information
