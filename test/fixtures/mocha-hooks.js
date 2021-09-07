@@ -1,14 +1,14 @@
 "use strict";
 
 const fs = require("fs");
-const del = require("del");
+const rimraf = require("rimraf");
 
 /**
  * Clean the .tmp directory before each test
  */
 beforeEach("clean the .tmp directory", async () => {
   // Delete the .tmp directory, if it exists
-  await del("test/.tmp");
+  await rimraf("test/.tmp");
 
   // Re-create the .tmp directory
   await new Promise((resolve, reject) => {

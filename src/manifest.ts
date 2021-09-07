@@ -1,9 +1,3 @@
-// NOTE: We can't `import` the package.json file because it's outside of the "src" directory.
-// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-const manifest = require("../package.json") as Manifest;
-
-export { manifest };
-
 /**
  * The npm package manifest (package.json)
  */

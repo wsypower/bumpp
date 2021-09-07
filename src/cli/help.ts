@@ -1,10 +1,10 @@
-import { manifest } from "../manifest";
+import { version, name, description } from "../../package.json";
 
 /**
  * Text explaining how to use the CLI
  */
 export const usageText = `
-Usage: bump [release] [options] [files...]
+Usage: bumpp [release] [options] [files...]
 
 release:
   The release version or type.  Can be one of the following:
@@ -53,22 +53,22 @@ files...
 
 Examples:
 
-  bump patch
+  bumpp patch
 
     Bumps the patch version number in package.json and package-lock.json.
     Nothing is committed to git.
 
-  bump major --commit
+  bumpp major --commit
 
     Bumps the major version number in package.json and package-lock.json.
     Commits package.json and package-lock.json to git, but does not tag the commit.
 
-  bump -tpa README.md
+  bumpp -tpa README.md
 
     Prompts for the new version number and updates package.json, package-lock.json, and README.md.
     Commits ALL modified files to git, tags the commit, and pushes the commit.
 
-  bump 4.27.9934 --tag "Version " bower.json docs/**/*.md
+  bumpp 4.27.9934 --tag "Version " bower.json docs/**/*.md
 
     Sets the version number to 4.27.9934 in package.json, package-lock.json, bower.json,
     and all markdown files in the "docs" directory.  Commits the updated files to git,
@@ -79,5 +79,5 @@ Examples:
  * Text describing the program and how to use it
  */
 export const helpText = `
-${manifest.name} - ${manifest.description}
+${name} v${version} - ${description}
 ${usageText}`;

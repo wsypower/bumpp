@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "newLine": "LF",
     "forceConsistentCasingInFileNames": true,

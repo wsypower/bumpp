@@ -8,6 +8,7 @@ import { VersionBumpOptions } from "./types/version-bump-options";
 import { NpmScript } from "./types/version-bump-progress";
 import { VersionBumpResults } from "./types/version-bump-results";
 import { updateFiles } from "./update-files";
+import { info, success } from "log-symbols";
 
 /**
  * Prompts the user for a version number and updates package.json and package-lock.json.
@@ -56,7 +57,9 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
   await updateFiles(operation);
 
   if (operation.options.execute) {
+    console.log(info, "Executing script", operation.options.execute);
     await ezSpawn.async(operation.options.execute, { stdio: "inherit" });
+    console.log(success, "Script finished");
   }
 
   // Run npm version script, if any

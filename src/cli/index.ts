@@ -1,5 +1,5 @@
 import { info, success } from "log-symbols";
-import { manifest } from "../manifest";
+import { version as packageVersion } from "../../package.json";
 import { ProgressEvent, VersionBumpProgress } from "../types/version-bump-progress";
 import { versionBump } from "../version-bump";
 import { ExitCode } from "./exit-code";
@@ -27,7 +27,7 @@ export async function main(args: string[]): Promise<void> {
     }
     else if (version) {
       // Show the version number and exit
-      console.log(manifest.version);
+      console.log(packageVersion);
       process.exit(ExitCode.Success);
     }
     else {
