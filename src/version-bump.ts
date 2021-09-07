@@ -1,4 +1,4 @@
-import ezSpawn = require("@jsdevtools/ez-spawn");
+import * as ezSpawn from "@jsdevtools/ez-spawn";
 import { getNewVersion } from "./get-new-version";
 import { getOldVersion } from "./get-old-version";
 import { gitCommit, gitPush, gitTag } from "./git";

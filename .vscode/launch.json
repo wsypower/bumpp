@@ -36,7 +36,7 @@
       "type": "node",
       "request": "launch",
       "name": "Run CLI",
-      "program": "${workspaceRoot}/bin/bump.js",
+      "program": "${workspaceRoot}/bin/bumpp.js",
       "args": [
         "major"
       ],

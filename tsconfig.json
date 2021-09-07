@@ -16,7 +16,8 @@
     "strictBindCallApply": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "stripInternal": true
+    "stripInternal": true,
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts"

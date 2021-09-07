@@ -7,7 +7,7 @@ chai.use(chaiExec);
 
 chaiExec.defaults = {
   command: "node",
-  args: "../../bin/bump.js",
+  args: "../../bin/bumpp.js",
   options: {
     cwd: "test/.tmp",
   },
