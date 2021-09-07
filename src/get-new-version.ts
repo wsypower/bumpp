@@ -1,5 +1,6 @@
-import * as inquirer from "inquirer";
-import * as semver from "semver";
+import { bold, green } from "chalk";
+import prompts from "prompts";
+import { valid as isValidVersion, clean as cleanVersion } from "semver";
 import { ReleaseType, SemVer } from "semver";
 import { BumpRelease, PromptRelease } from "./normalize-options";
 import { Operation } from "./operation";
@@ -73,61 +74,61 @@ function getNextVersions(oldVersion: string, preid: string): Record<ReleaseType,
  * @returns - A tuple containing the new version number and the release type (if any)
  */
 async function promptForNewVersion(operation: Operation): Promise<Operation> {
-  let { oldVersion, oldVersionSource } = operation.state;
+  let { oldVersion } = operation.state;
   let release = operation.options.release as PromptRelease;
-  let prompts = inquirer.createPromptModule(operation.options.interface as inquirer.StreamOptions);
 
   let next = getNextVersions(oldVersion, release.preid);
 
   let answers: {
     release: ReleaseType | "none" | "custom";
-    newVersion?: string;
+    custom?: string;
   };
 
   answers = await prompts([
     {
-      type: "list",
+      type: "autocomplete",
       name: "release",
-      message: `\nThe current version in ${oldVersionSource} is ${oldVersion}\nHow would you like to bump it?`,
-      default: "patch",
-      pageSize: 10,
+      message: `Current version: ${green(oldVersion)}`,
+      initial: "patch",
       choices: [
-        { value: "major", name: `major (${next.major})` },
-        { value: "minor", name: `minor (${next.minor})` },
-        { value: "patch", name: `patch (${next.patch})` },
-        { value: "premajor", name: `pre-release major (${next.premajor})` },
-        { value: "preminor", name: `pre-release minor (${next.preminor})` },
-        { value: "prepatch", name: `pre-release patch (${next.prepatch})` },
-        { value: "prerelease", name: `pre-release (${next.prerelease})` },
-        new inquirer.Separator(),
-        { value: "none", name: `leave as-is (${oldVersion})` },
-        { value: "custom", name: "custom..." },
+        { value: "major", title: "major - " + bold(next.major) },
+        { value: "minor", title: "minor - " + bold(next.minor) },
+        { value: "patch", title: "patch - " + bold(next.patch) },
+        { value: "premajor", title: "pre-release major - " + bold(next.premajor) },
+        { value: "preminor", title: "pre-release minor - " + bold(next.preminor) },
+        { value: "prepatch", title: "pre-release patch - " + bold(next.prepatch) },
+        { value: "prerelease", title: "pre-release - " + bold(next.prerelease) },
+        { value: "none", title: "leave as-is - " + bold(oldVersion) },
+        { value: "custom", title: "custom..." },
       ]
     },
     {
-      type: "input",
-      name: "newVersion",
+      type: (prev) => prev === "custom" ? "text" : null,
+      name: "custom",
       message: "Enter the new version number:",
-      default: oldVersion,
-      when: (previousAnswer) => previousAnswer.release === "custom",
-      filter: semver.clean,
-      validate: (newVersion: string) => {
-        return semver.valid(newVersion) ? true : "That's not a valid version number";
+      initial: oldVersion,
+      validate: (custom: string) => {
+        return isValidVersion(custom) ? true : "That's not a valid version number";
       },
     }
   ]);
 
-  switch (answers.release) {
-    case "none":
-      return operation.update({ newVersion: oldVersion });
+  const newVersion = answers.release === "none"
+    ? oldVersion
+    : answers.release === "custom"
+      ? cleanVersion(answers.custom!)!
+      : next[answers.release];
 
+  if (!newVersion) {
+    process.exit(1);
+  }
+
+  switch (answers.release) {
     case "custom":
-      return operation.update({ newVersion: answers.newVersion! });
+    case "none":
+      return operation.update({ newVersion });
 
     default:
-      return operation.update({
-        release: answers.release,
-        newVersion: next[answers.release],
-      });
+      return operation.update({ release: answers.release, newVersion, });
   }
 }

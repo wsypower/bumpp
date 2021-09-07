@@ -1,5 +1,5 @@
 import commandLineArgs from "command-line-args";
-import semver from "semver";
+import { valid as isValidVersion } from "semver";
 import { isReleaseType } from "../release-type";
 import { VersionBumpOptions } from "../types/version-bump-options";
 import { ExitCode } from "./exit-code";
@@ -75,7 +75,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
     if (parsedArgs.options.files && parsedArgs.options.files.length > 0) {
       let firstArg = parsedArgs.options.files[0];
 
-      if (firstArg === "prompt" || isReleaseType(firstArg) || semver.valid(firstArg)) {
+      if (firstArg === "prompt" || isReleaseType(firstArg) || isValidVersion(firstArg)) {
         parsedArgs.options.release = firstArg;
         parsedArgs.options.files.shift();
       }
