@@ -1,4 +1,4 @@
-import * as globby from "globby";
+import globby from "globby";
 import { hasMagic } from "globby";
 import { isReleaseType, ReleaseType } from "./release-type";
 import { VersionBumpOptions } from "./types/version-bump-options";

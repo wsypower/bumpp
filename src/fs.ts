@@ -1,7 +1,7 @@
-import * as detectIndent from "detect-indent";
-import * as detectNewline from "detect-newline";
-import * as fs from "fs";
-import * as path from "path";
+import detectIndent from "detect-indent";
+import detectNewline from "detect-newline";
+import fs from "fs";
+import path from "path";
 
 /**
  * Describes a plain-text file.

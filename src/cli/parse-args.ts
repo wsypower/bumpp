@@ -1,5 +1,5 @@
-import * as commandLineArgs from "command-line-args";
-import * as semver from "semver";
+import commandLineArgs from "command-line-args";
+import semver from "semver";
 import { isReleaseType } from "../release-type";
 import { VersionBumpOptions } from "../types/version-bump-options";
 import { ExitCode } from "./exit-code";

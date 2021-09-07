@@ -7,6 +7,7 @@ Forked from [`version-bump-prompt`](https://github.com/JS-DevTools/version-bump-
 ###### Changes in this fork
 
 - Renamed to `bumpp` - so you can use `npx bumpp` directly
+- Ships ESM and CJS bundles
 - Add a new argument `--execute` to execute the command before committing 
 
 <details>
