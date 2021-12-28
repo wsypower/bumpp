@@ -5,7 +5,6 @@ const { expect } = require("chai");
 const manifest = require("../../package.json");
 
 describe("bump", () => {
-
   it("should run without any arguments", () => {
     // Create a dummy package.json, otherwise an error will occur
     files.create("package.json", { version: "1.0.0" });

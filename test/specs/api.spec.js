@@ -1,6 +1,6 @@
 "use strict";
 
-const versionBump = require("../../");
+const { versionBump } = require("../../dist/index.js");
 const { files, mocks } = require("../utils");
 const { expect } = require("chai");
 

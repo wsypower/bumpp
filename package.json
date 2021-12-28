@@ -41,16 +41,15 @@
     "test": "mocha && npm run lint",
     "coverage": "nyc node_modules/mocha/bin/mocha",
     "upgrade": "npm-check -u && npm audit fix",
-    "bump": "esno src/cli/run.ts --tag --push --all",
+    "bumpp": "esno src/cli/run.ts --tag --push --all",
     "prepublishOnly": "npm run clean && npm run build",
-    "release": "npm run bump && npm publish"
+    "release": "npm run bumpp && npm publish"
   },
   "devDependencies": {
     "@jsdevtools/chai-exec": "^2.1.1",
     "@jsdevtools/eslint-config": "^1.1.4",
     "@types/chai": "^4.2.21",
     "@types/command-line-args": "^5.2.0",
-    "@types/globby": "^9.1.0",
     "@types/inquirer": "^7.3.3",
     "@types/mocha": "^8.2.3",
     "@types/node": "^14.17.14",
@@ -67,7 +66,7 @@
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "strip-ansi": "^6.0.0",
-    "tsup": "^4.14.0",
+    "tsup": "^5.11.9",
     "typescript": "^4.4.2"
   },
   "dependencies": {

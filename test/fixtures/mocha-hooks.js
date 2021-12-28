@@ -8,7 +8,7 @@ const rimraf = require("rimraf");
  */
 beforeEach("clean the .tmp directory", async () => {
   // Delete the .tmp directory, if it exists
-  await rimraf("test/.tmp");
+  await new Promise(r => rimraf("test/.tmp", r));
 
   // Re-create the .tmp directory
   await new Promise((resolve, reject) => {
