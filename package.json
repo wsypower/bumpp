@@ -2,13 +2,13 @@
   "name": "bumpp",
   "version": "8.0.0",
   "packageManager": "pnpm@7.2.1",
-  "description": "Automatically (or with prompts) bump your version number, commit changes, tag, and push to Git",
+  "description": "Bump version, commit changes, tag, and push to Git",
   "author": {
     "name": "James Messinger",
     "url": "https://jamesmessinger.com"
   },
   "license": "MIT",
-  "homepage": "https://jstools.dev/version-bump-prompt",
+  "homepage": "https://github.com/antfu/bumpp",
   "repository": {
     "type": "git",
     "url": "https://github.com/antfu/bumpp.git"
