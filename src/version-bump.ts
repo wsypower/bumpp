@@ -58,8 +58,9 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
       name: 'yes',
       type: 'confirm',
       message: 'Bump?',
+      initial: true,
     }).then(r => r.yes))
-      return
+      process.exit(1)
   }
 
   // Run npm preversion script, if any
