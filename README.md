@@ -12,6 +12,7 @@ Forked from [`version-bump-prompt`](https://github.com/JS-DevTools/version-bump-
 - Use current version's `preid` when avaliable.
 - Confirmation before bumping.
 - Enable `--commit` `--tag` `--push` by default. (opt-out by `--no-push`, etc.)
+- Conventional Commits by default. 
 
 <details>
 <summary>Original README</summary>
