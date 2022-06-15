@@ -1,4 +1,4 @@
-import { bold, green } from 'chalk'
+import { bold, green } from 'kleur'
 import prompts from 'prompts'
 import semver, { SemVer, clean as cleanVersion, valid as isValidVersion } from 'semver'
 import type { BumpRelease, PromptRelease } from './normalize-options'

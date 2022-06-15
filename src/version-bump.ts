@@ -1,5 +1,5 @@
 import * as ezSpawn from '@jsdevtools/ez-spawn'
-import { bold, cyan, green } from 'chalk'
+import { bold, cyan, green } from 'kleur'
 import { info, success } from 'log-symbols'
 import prompts from 'prompts'
 import { getNewVersion } from './get-new-version'
@@ -52,25 +52,12 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
   await getNewVersion(operation)
 
   if (arg.confirm) {
-    console.log()
-    console.log(`   files ${operation.options.files.map(i => bold(i)).join(', ')}`)
-    if (operation.options.commit)
-      console.log(`  commit ${bold(formatVersionString(operation.options.commit.message, operation.state.newVersion))}`)
-    if (operation.options.tag)
-      console.log(`     tag ${bold(formatVersionString(operation.options.tag.name, operation.state.newVersion))}`)
-    if (operation.options.execute)
-      console.log(` execute ${bold(operation.options.execute)}`)
-    if (operation.options.push)
-      console.log(`    push ${cyan(bold('yes'))}`)
-    console.log()
-    console.log(`    from ${bold(operation.state.oldVersion)}`)
-    console.log(`      to ${green(bold(operation.state.newVersion))}`)
-    console.log()
+    printSummary(operation)
 
     if (!await prompts({
       name: 'yes',
       type: 'confirm',
-      message: 'Bump',
+      message: 'Bump?',
     }).then(r => r.yes))
       return
   }
@@ -101,4 +88,21 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
   await gitPush(operation)
 
   return operation.results
+}
+
+function printSummary(operation: Operation) {
+  console.log()
+  console.log(`   files ${operation.options.files.map(i => bold(i)).join(', ')}`)
+  if (operation.options.commit)
+    console.log(`  commit ${bold(formatVersionString(operation.options.commit.message, operation.state.newVersion))}`)
+  if (operation.options.tag)
+    console.log(`     tag ${bold(formatVersionString(operation.options.tag.name, operation.state.newVersion))}`)
+  if (operation.options.execute)
+    console.log(` execute ${bold(operation.options.execute)}`)
+  if (operation.options.push)
+    console.log(`    push ${cyan(bold('yes'))}`)
+  console.log()
+  console.log(`    from ${bold(operation.state.oldVersion)}`)
+  console.log(`      to ${green(bold(operation.state.newVersion))}`)
+  console.log()
 }

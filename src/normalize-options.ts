@@ -1,4 +1,4 @@
-import globby, { hasMagic } from 'globby'
+import fg from 'fast-glob'
 import type { ReleaseType } from './release-type'
 import { isReleaseType } from './release-type'
 import type { VersionBumpOptions } from './types/version-bump-options'
@@ -97,19 +97,16 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
   else if (raw.commit || tag || push)
     commit = { all, noVerify, message: 'chore: release v' }
 
-  let files
-  if (Array.isArray(raw.files) && raw.files.length > 0) {
-    files = await strictGlobMatches(raw.files, { cwd })
-  }
-  else {
-    // Try to find these files by default.
-    // If they don't exist, then they will NOT be included in the `files` array.
-    files = await globby(['package.json', 'package-lock.json'], { cwd })
-  }
+  const files = await fg(
+    raw.files?.length
+      ? raw.files
+      : ['package.json', 'package-lock.json'],
+    { cwd, onlyFiles: true },
+  )
 
   let ui: Interface
   if (raw.interface === false) {
-    ui = { input: false, outut: false }
+    ui = { input: false, output: false }
   }
   else if (raw.interface === true || !raw.interface) {
     ui = { input: process.stdin, output: process.stdout }
@@ -133,39 +130,3 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
   return { release, commit, tag, push, files, cwd, interface: ui, ignoreScripts, execute }
 }
 
-/**
- * Returns all files that match the given glob patterns.
- * An error is thrown if any pattern matches zero files.
- */
-async function strictGlobMatches(files: string[], options: object): Promise<string[]> {
-  // Match all glob patterns simultaneously
-  const matches = await Promise.all(files.map(file => strictGlobMatch(file, options)))
-
-  // Get all the unique files
-  const matchedFiles = new Set<string>()
-  for (const match of matches) {
-    for (const file of match)
-      matchedFiles.add(file)
-  }
-
-  return [...matchedFiles]
-}
-
-/**
- * Returns all files that match the given glob pattern.
- * An error is thrown if the pattern matches zero files.
- */
-async function strictGlobMatch(file: string, options: object): Promise<string[]> {
-  const matches = await globby(file, options)
-
-  if (matches.length === 0) {
-    if (hasMagic(file))
-      throw new Error(`Could not find any files matching "${file}".`)
-
-    else
-      throw new Error(`Could not find file: ${file}.`)
-  }
-
-  // Return files in a predictable order
-  return matches.sort()
-}
