@@ -25,10 +25,6 @@ Forked from [`version-bump-prompt`](https://github.com/JS-DevTools/version-bump-
 [![License](https://img.shields.io/npm/l/@jsdevtools/version-bump-prompt.svg)](LICENSE)
 [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/JS-DevTools/version-bump-prompt)
 
-![Screenshot](https://jstools.dev/version-bump-prompt/img/screenshot.gif)
-
-
-
 ### Automate your release process with a single command that can:
 
 - Prompt for the type of version bump
