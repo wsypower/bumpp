@@ -106,3 +106,18 @@ function printSummary(operation: Operation) {
   console.log(`      to ${green(bold(operation.state.newVersion))}`)
   console.log()
 }
+
+/**
+ * Bumps the version number in one or more files, prompting users if necessary.
+ */
+export async function versionBumpInfo(arg: VersionBumpOptions | string = {}): Promise<Operation> {
+  if (typeof arg === 'string')
+    arg = { release: arg }
+
+  const operation = await Operation.start(arg)
+
+  // Get the old and new version numbers
+  await getOldVersion(operation)
+  await getNewVersion(operation)
+  return operation
+}
