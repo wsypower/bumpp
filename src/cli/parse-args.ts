@@ -1,19 +1,19 @@
-import { valid as isValidVersion } from "semver";
-import { isReleaseType } from "../release-type";
-import { VersionBumpOptions } from "../types/version-bump-options";
-import { ExitCode } from "./exit-code";
-import { usageText } from "./help";
+import { valid as isValidVersion } from 'semver'
 import cac from 'cac'
-import {version} from '../../package.json'
+import { isReleaseType } from '../release-type'
+import type { VersionBumpOptions } from '../types/version-bump-options'
+import { version } from '../../package.json'
+import { ExitCode } from './exit-code'
+import { usageText } from './help'
 
 /**
  * The parsed command-line arguments
  */
 export interface ParsedArgs {
-  help?: boolean;
-  version?: boolean;
-  quiet?: boolean;
-  options: VersionBumpOptions;
+  help?: boolean
+  version?: boolean
+  quiet?: boolean
+  options: VersionBumpOptions
 }
 
 /**
@@ -21,28 +21,26 @@ export interface ParsedArgs {
  */
 export function parseArgs(argv: string[]): ParsedArgs {
   try {
+    const cli = cac('bumpp')
 
-const cli = cac('bumpp')
+    cli
+      .version(version)
+      .usage('[...files]')
+      .option('--preid <preid>', 'ID for prerelease')
+      .option('--all', 'Include all files')
+      .option('-c, --commit [msg]', 'Commit message', { default: true })
+      .option('-t, --tag [tag]', 'Tag name', { default: true })
+      .option('-p, --push', 'Push to remote', { default: true })
+      .option('--no-verify', 'Skip git verification')
+      .option('--ignore-scripts', 'Ignore scripts', { default: false })
+      .option('-q, --quiet', 'Quiet mode')
+      .option('-v, --version <version>', 'Tagert version')
+      .option('-x, --execute <command>', 'Commands to execute after version bumps')
+      .help()
 
-cli
-  .version(version)
-  .usage('[...files]')
-  .option('--preid <preid>', 'ID for prerelease')
-  .option('--all', 'Include all files')
-  .option('-c, --commit [msg]', 'Commit message', {default: true})
-  .option('-t, --tag [tag]', 'Tag name', {default: true})
-  .option('-p, --push', 'Push to remote', {default: true})
-  .option('--no-verify', 'Skip git verification')
-  .option('--ignore-scripts', 'Ignore scripts', {default: false})
-  .option('-q, --quiet', 'Quiet mode')
-  .option('-v, --version <version>', 'Tagert version')
-  .option('-x, --execute <command>', 'Commands to execute after version bumps')
-   .help()
+    const args = cli.parse(argv).options
 
- const args = cli.parse().options
- 
-
-    let parsedArgs: ParsedArgs = {
+    const parsedArgs: ParsedArgs = {
       help: args.help as boolean,
       version: args.version as boolean,
       quiet: args.quiet as boolean,
@@ -56,31 +54,29 @@ cli
         files: args['--'],
         ignoreScripts: args.ignoreScripts,
         execute: args.execute,
-      }
-    };
-
+      },
+    }
 
     // If a version number or release type was specified, then it will mistakenly be added to the "files" array
     if (parsedArgs.options.files && parsedArgs.options.files.length > 0) {
-      let firstArg = parsedArgs.options.files[0];
+      const firstArg = parsedArgs.options.files[0]
 
-      if (firstArg === "prompt" || isReleaseType(firstArg) || isValidVersion(firstArg)) {
-        parsedArgs.options.release = firstArg;
-        parsedArgs.options.files.shift();
+      if (firstArg === 'prompt' || isReleaseType(firstArg) || isValidVersion(firstArg)) {
+        parsedArgs.options.release = firstArg
+        parsedArgs.options.files.shift()
       }
     }
 
-
-    return parsedArgs;
+    return parsedArgs
   }
   catch (error) {
     // There was an error parsing the command-line args
-    return errorHandler(error as Error);
+    return errorHandler(error as Error)
   }
 }
 
 function errorHandler(error: Error): never {
-  console.error(error.message);
-  console.error(usageText);
-  return process.exit(ExitCode.InvalidArgument);
+  console.error(error.message)
+  console.error(usageText)
+  return process.exit(ExitCode.InvalidArgument)
 }

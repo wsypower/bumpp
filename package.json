@@ -3,6 +3,16 @@
   "version": "7.2.0",
   "packageManager": "pnpm@7.2.1",
   "description": "Automatically (or with prompts) bump your version number, commit changes, tag, and push to Git",
+  "author": {
+    "name": "James Messinger",
+    "url": "https://jamesmessinger.com"
+  },
+  "license": "MIT",
+  "homepage": "https://jstools.dev/version-bump-prompt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antfu/bumpp.git"
+  },
   "keywords": [
     "version",
     "bump",
@@ -15,16 +25,6 @@
     "push",
     "prompt"
   ],
-  "author": {
-    "name": "James Messinger",
-    "url": "https://jamesmessinger.com"
-  },
-  "license": "MIT",
-  "homepage": "https://jstools.dev/version-bump-prompt",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/antfu/bumpp.git"
-  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -34,9 +34,12 @@
     "bin",
     "dist"
   ],
+  "engines": {
+    "node": ">=10"
+  },
   "scripts": {
     "clean": "rimraf .nyc_output coverage dist",
-    "lint": "eslint src test",
+    "lint": "eslint .",
     "build": "tsup src/index.ts src/cli/index.ts --format esm,cjs --dts --clean",
     "watch": "npm run build -- --watch src",
     "start": "esno src/cli/run.ts",
@@ -47,9 +50,17 @@
     "prepublishOnly": "npm run clean && npm run build",
     "release": "npm run bumpp && npm publish"
   },
+  "dependencies": {
+    "@jsdevtools/ez-spawn": "^3.0.4",
+    "cac": "^6.7.12",
+    "chalk": "^4.1.2",
+    "globby": "^11.0.4",
+    "prompts": "^2.4.1",
+    "semver": "^7.3.5"
+  },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.25.1",
     "@jsdevtools/chai-exec": "^2.1.1",
-    "@jsdevtools/eslint-config": "^1.1.4",
     "@types/chai": "^4.2.21",
     "@types/inquirer": "^7.3.3",
     "@types/mocha": "^8.2.3",
@@ -59,7 +70,7 @@
     "chai": "^4.3.4",
     "detect-indent": "^7.0.0",
     "detect-newline": "^3.1.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.8.0",
     "esno": "^0.9.1",
     "log-symbols": "^4.1.0",
     "mocha": "^8.4.0",
@@ -69,17 +80,6 @@
     "strip-ansi": "^6.0.0",
     "tsup": "^5.11.9",
     "typescript": "^4.4.2"
-  },
-  "dependencies": {
-    "@jsdevtools/ez-spawn": "^3.0.4",
-    "cac": "^6.7.12",
-    "chalk": "^4.1.2",
-    "globby": "^11.0.4",
-    "prompts": "^2.4.1",
-    "semver": "^7.3.5"
-  },
-  "engines": {
-    "node": ">=10"
   },
   "engineStrict": true
 }

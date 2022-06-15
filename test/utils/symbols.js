@@ -1,7 +1,7 @@
-"use strict";
+'use strict'
 
-const stripAnsi = require("strip-ansi");
-const logSymbols = require("log-symbols");
+const stripAnsi = require('strip-ansi')
+const logSymbols = require('log-symbols')
 
 module.exports = {
   /**
@@ -15,4 +15,4 @@ module.exports = {
    * with the ANSI color sequences removed
    */
   info: stripAnsi(logSymbols.info),
-};
+}

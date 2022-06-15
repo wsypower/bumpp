@@ -1,6 +1,6 @@
-"use strict";
+'use strict'
 
-const files = require("./files");
+const files = require('./files')
 
 const mocks = module.exports = {
   /**
@@ -8,8 +8,8 @@ const mocks = module.exports = {
    *
    * @returns {string[]}
    */
-  git () {
-    return mocks.gitDetails().map(mock => mock.cmd);
+  git() {
+    return mocks.gitDetails().map(mock => mock.cmd)
   },
 
   /**
@@ -17,8 +17,8 @@ const mocks = module.exports = {
    *
    * @returns {object[]}
    */
-  gitDetails () {
-    return mocks.all().filter(mock => mock.bin === "git");
+  gitDetails() {
+    return mocks.all().filter(mock => mock.bin === 'git')
   },
 
   /**
@@ -26,8 +26,8 @@ const mocks = module.exports = {
    *
    * @returns {string[]}
    */
-  npm () {
-    return mocks.npmDetails().map(mock => mock.cmd);
+  npm() {
+    return mocks.npmDetails().map(mock => mock.cmd)
   },
 
   /**
@@ -35,8 +35,8 @@ const mocks = module.exports = {
    *
    * @returns {object[]}
    */
-  npmDetails () {
-    return mocks.all().filter(mock => mock.bin === "npm");
+  npmDetails() {
+    return mocks.all().filter(mock => mock.bin === 'npm')
   },
 
   /**
@@ -44,8 +44,8 @@ const mocks = module.exports = {
    *
    * @returns {object[]}
    */
-  all () {
-    return files.json("mocks.json") || [];
+  all() {
+    return files.json('mocks.json') || []
   },
 
   /**
@@ -54,9 +54,9 @@ const mocks = module.exports = {
    * @param {string} bin - The binary that was executed (e.g. "git", "npm")
    * @param {string[]} args - The CLI arguments
    */
-  record (bin, args) {
+  record(bin, args) {
     // Open the existing file, if any
-    let array = files.json("mocks.json") || [];
+    const array = files.json('mocks.json') || []
 
     // Add an entry for this execution
     array.push({
@@ -65,16 +65,16 @@ const mocks = module.exports = {
       args,
 
       // Record the command that was executed
-      cmd: bin + " " + args.map(quoteArgs).join(" "),
+      cmd: `${bin} ${args.map(quoteArgs).join(' ')}`,
 
       // Record the version number at the time that the command was executed
-      version: files.json("package.json").version,
-    });
+      version: files.json('package.json').version,
+    })
 
     // Save the changes
-    files.create("mocks.json", array);
+    files.create('mocks.json', array)
   },
-};
+}
 
 /**
  * Adds quotes around an argument if it contains whitespace characters
@@ -82,11 +82,10 @@ const mocks = module.exports = {
  * @param {string} arg
  * @returns {string}
  */
-function quoteArgs (arg) {
-  if (/\s+/.test(arg)) {
-    return `"${arg}"`;
-  }
-  else {
-    return arg;
-  }
+function quoteArgs(arg) {
+  if (/\s+/.test(arg))
+    return `"${arg}"`
+
+  else
+    return arg
 }

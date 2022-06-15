@@ -1,9 +1,9 @@
-"use strict";
+'use strict'
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs')
+const path = require('path')
 
-const tempDir = path.resolve(__dirname, "..", ".tmp");
+const tempDir = path.resolve(__dirname, '..', '.tmp')
 
 const files = module.exports = {
   /**
@@ -12,16 +12,15 @@ const files = module.exports = {
    * @param {string} name - The file name (e.g. "package.json")
    * @param {string|object} [contents] - The file contents
    */
-  create (name, contents) {
-    if (typeof contents === "object") {
-      contents = JSON.stringify(contents, null, 2);
-    }
+  create(name, contents) {
+    if (typeof contents === 'object')
+      contents = JSON.stringify(contents, null, 2)
 
-    let filePath = path.join(tempDir, name);
-    let dirPath = path.dirname(filePath);
+    const filePath = path.join(tempDir, name)
+    const dirPath = path.dirname(filePath)
 
-    fs.mkdirSync(dirPath, { recursive: true });
-    fs.writeFileSync(filePath, contents);
+    fs.mkdirSync(dirPath, { recursive: true })
+    fs.writeFileSync(filePath, contents)
   },
 
   /**
@@ -30,12 +29,12 @@ const files = module.exports = {
    * @param {string} name - The file name (e.g. "README.md", "script1.js")
    * @returns {object}
    */
-  text (name) {
+  text(name) {
     try {
-      return fs.readFileSync(path.join(tempDir, name), "utf8");
+      return fs.readFileSync(path.join(tempDir, name), 'utf8')
     }
     catch (e) {
-      return "";
+      return ''
     }
   },
 
@@ -46,13 +45,13 @@ const files = module.exports = {
    * @param {string} name - The file name (e.g. "package.json")
    * @returns {object|undefined}
    */
-  json (name) {
+  json(name) {
     try {
-      let json = files.text(name);
-      return JSON.parse(json);
+      const json = files.text(name)
+      return JSON.parse(json)
     }
     catch (e) {
-      return undefined;
+      return undefined
     }
   },
-};
+}
