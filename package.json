@@ -1,6 +1,6 @@
 {
   "name": "bumpp",
-  "version": "7.1.1",
+  "version": "7.2.0",
   "description": "Automatically (or with prompts) bump your version number, commit changes, tag, and push to Git",
   "keywords": [
     "version",
