@@ -1,7 +1,7 @@
 import { bold, green } from "chalk";
 import prompts from "prompts";
 import { valid as isValidVersion, clean as cleanVersion } from "semver";
-import { ReleaseType, SemVer } from "semver";
+import semver, { ReleaseType, SemVer } from "semver";
 import { BumpRelease, PromptRelease } from "./normalize-options";
 import { Operation } from "./operation";
 import { isPrerelease, releaseTypes } from "./release-type";
@@ -61,9 +61,18 @@ function getNextVersion(oldVersion: string, bump: BumpRelease): string {
 function getNextVersions(oldVersion: string, preid: string): Record<ReleaseType, string> {
   let next: Record<string, string> = {};
 
-  for (let type of releaseTypes) {
-    next[type] = getNextVersion(oldVersion, { type, preid });
+  const parse = semver.parse(oldVersion);
+  if (typeof parse?.prerelease[0] === "string") {
+    preid = parse?.prerelease[0] || "preid";
   }
+
+  for (let type of releaseTypes) {
+    next[type] = semver.inc(oldVersion, type, preid)!;
+  }
+
+  next.next = parse?.prerelease?.length
+    ? semver.inc(oldVersion, "prerelease", preid)!
+    : semver.inc(oldVersion, "patch")!;
 
   return next;
 }
@@ -89,16 +98,14 @@ async function promptForNewVersion(operation: Operation): Promise<Operation> {
       type: "autocomplete",
       name: "release",
       message: `Current version: ${green(oldVersion)}`,
-      initial: "patch",
+      initial: "next",
       choices: [
         { value: "major", title: "major - " + bold(next.major) },
         { value: "minor", title: "minor - " + bold(next.minor) },
         { value: "patch", title: "patch - " + bold(next.patch) },
-        { value: "premajor", title: "pre-release major - " + bold(next.premajor) },
-        { value: "preminor", title: "pre-release minor - " + bold(next.preminor) },
-        { value: "prepatch", title: "pre-release patch - " + bold(next.prepatch) },
+        { value: "next", title: "next - " + bold(next.next) },
         { value: "prerelease", title: "pre-release - " + bold(next.prerelease) },
-        { value: "none", title: "leave as-is - " + bold(oldVersion) },
+        { value: "none", title: "as-is - " + bold(oldVersion) },
         { value: "custom", title: "custom..." },
       ]
     },

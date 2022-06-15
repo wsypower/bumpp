@@ -5,7 +5,7 @@ export { ReleaseType };
 /**
  * The different types of pre-releases.
  */
-export const prereleaseTypes: ReleaseType[] = ["premajor", "preminor", "prepatch", "prerelease"];
+export const prereleaseTypes: ReleaseType[] = ["prerelease"];
 
 /**
  * All possible release types.
