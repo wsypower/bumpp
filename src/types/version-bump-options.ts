@@ -58,6 +58,13 @@ export interface VersionBumpOptions {
   all?: boolean
 
   /**
+   * Prompt for confirmation
+   *
+   * @default false
+   */
+  confirm?: boolean
+
+  /**
    * Indicates whether to bypass git commit hooks (`git commit --no-verify`).
    *
    * Defaults to `false`.

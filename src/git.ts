@@ -87,7 +87,7 @@ export async function gitPush(operation: Operation): Promise<Operation> {
  * If the template contains any "%s" placeholders, then they are replaced with the version number;
  * otherwise, the version number is appended to the string.
  */
-function formatVersionString(template: string, newVersion: string): string {
+export function formatVersionString(template: string, newVersion: string): string {
   if (template.includes('%s'))
     return template.replace(/%s/g, newVersion)
 

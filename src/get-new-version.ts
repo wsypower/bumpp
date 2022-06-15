@@ -85,20 +85,21 @@ async function promptForNewVersion(operation: Operation): Promise<Operation> {
 
   const next = getNextVersions(oldVersion, release.preid)
 
+  const PADDING = 13
   const answers = await prompts([
     {
       type: 'autocomplete',
       name: 'release',
-      message: `Current version: ${green(oldVersion)}`,
+      message: `Current version ${green(oldVersion)}`,
       initial: 'next',
       choices: [
-        { value: 'major', title: `major - ${bold(next.major)}` },
-        { value: 'minor', title: `minor - ${bold(next.minor)}` },
-        { value: 'patch', title: `patch - ${bold(next.patch)}` },
-        { value: 'next', title: `next - ${bold(next.next)}` },
-        { value: 'prerelease', title: `pre-release - ${bold(next.prerelease)}` },
-        { value: 'none', title: `as-is - ${bold(oldVersion)}` },
-        { value: 'custom', title: 'custom...' },
+        { value: 'major', title: `${'major'.padStart(PADDING, ' ')} ${bold(next.major)}` },
+        { value: 'minor', title: `${'minor'.padStart(PADDING, ' ')} ${bold(next.minor)}` },
+        { value: 'patch', title: `${'patch'.padStart(PADDING, ' ')} ${bold(next.patch)}` },
+        { value: 'next', title: `${'next'.padStart(PADDING, ' ')} ${bold(next.next)}` },
+        { value: 'prerelease', title: `${'pre-release'.padStart(PADDING, ' ')} ${bold(next.prerelease)}` },
+        { value: 'none', title: `${'as-is'.padStart(PADDING, ' ')} ${bold(oldVersion)}` },
+        { value: 'custom', title: 'custom ...'.padStart(PADDING + 4, ' ') },
       ],
     },
     {

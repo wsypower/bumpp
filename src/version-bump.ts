@@ -1,8 +1,10 @@
 import * as ezSpawn from '@jsdevtools/ez-spawn'
+import { bold, cyan, green } from 'chalk'
 import { info, success } from 'log-symbols'
+import prompts from 'prompts'
 import { getNewVersion } from './get-new-version'
 import { getOldVersion } from './get-old-version'
-import { gitCommit, gitPush, gitTag } from './git'
+import { formatVersionString, gitCommit, gitPush, gitTag } from './git'
 import { Operation } from './operation'
 import { runNpmScript } from './run-npm-script'
 import type { VersionBumpOptions } from './types/version-bump-options'
@@ -39,7 +41,7 @@ export async function versionBump(options: VersionBumpOptions): Promise<VersionB
  * Bumps the version number in one or more files, prompting the user if necessary.
  * Optionally also commits, tags, and pushes to git.
  */
-export async function versionBump(arg: VersionBumpOptions | string = {}): Promise<VersionBumpResults> {
+export async function versionBump(arg: VersionBumpOptions | string = {}): Promise<VersionBumpResults | undefined> {
   if (typeof arg === 'string')
     arg = { release: arg }
 
@@ -48,6 +50,30 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
   // Get the old and new version numbers
   await getOldVersion(operation)
   await getNewVersion(operation)
+
+  if (arg.confirm) {
+    console.log()
+    console.log(`   files ${operation.options.files.map(i => bold(i)).join(', ')}`)
+    if (operation.options.commit)
+      console.log(`  commit ${bold(formatVersionString(operation.options.commit.message, operation.state.newVersion))}`)
+    if (operation.options.tag)
+      console.log(`     tag ${bold(formatVersionString(operation.options.tag.name, operation.state.newVersion))}`)
+    if (operation.options.execute)
+      console.log(` execute ${bold(operation.options.execute)}`)
+    if (operation.options.push)
+      console.log(`    push ${cyan(bold('yes'))}`)
+    console.log()
+    console.log(`    from ${bold(operation.state.oldVersion)}`)
+    console.log(`      to ${green(bold(operation.state.newVersion))}`)
+    console.log()
+
+    if (!await prompts({
+      name: 'yes',
+      type: 'confirm',
+      message: 'Bump',
+    }).then(r => r.yes))
+      return
+  }
 
   // Run npm preversion script, if any
   await runNpmScript(NpmScript.PreVersion, operation)

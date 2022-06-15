@@ -10,6 +10,7 @@ Forked from [`version-bump-prompt`](https://github.com/JS-DevTools/version-bump-
 - Ships ESM and CJS bundles.
 - Add a new argument `--execute` to execute the command before committing.
 - Use current version's `preid` when avaliable.
+- Confirmation before bumping.
 - Enable `--commit` `--tag` `--push` by default. (opt-out by `--no-push`, etc.)
 
 <details>

@@ -31,6 +31,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
       .option('-c, --commit [msg]', 'Commit message', { default: true })
       .option('-t, --tag [tag]', 'Tag name', { default: true })
       .option('-p, --push', 'Push to remote', { default: true })
+      .option('-y, --yes', 'Skip confirmation')
       .option('--no-verify', 'Skip git verification')
       .option('--ignore-scripts', 'Ignore scripts', { default: false })
       .option('-q, --quiet', 'Quiet mode')
@@ -50,6 +51,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
         tag: args.tag,
         push: args.push,
         all: args.all,
+        confirm: !args.yes,
         noVerify: !args.verify,
         files: args['--'],
         ignoreScripts: args.ignoreScripts,
