@@ -4,7 +4,6 @@ import type { VersionBumpProgress } from '../types/version-bump-progress'
 import { ProgressEvent } from '../types/version-bump-progress'
 import { versionBump } from '../version-bump'
 import { ExitCode } from './exit-code'
-import { helpText } from './help'
 import { parseArgs } from './parse-args'
 
 /**
@@ -12,18 +11,16 @@ import { parseArgs } from './parse-args'
  *
  * @param args - The command-line arguments (e.g. ["major", "--preid=alpha", "-ctpa"])
  */
-export async function main(args: string[]): Promise<void> {
+export async function main(): Promise<void> {
   try {
     // Setup global error handlers
     process.on('uncaughtException', errorHandler)
     process.on('unhandledRejection', errorHandler)
 
     // Parse the command-line arguments
-    const { help, version, quiet, options } = parseArgs(args)
+    const { help, version, quiet, options } = parseArgs()
 
     if (help) {
-      // Show the help text and exit
-      console.log(helpText)
       process.exit(ExitCode.Success)
     }
     else if (version) {

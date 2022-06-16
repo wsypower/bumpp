@@ -4,7 +4,6 @@ import { isReleaseType } from '../release-type'
 import type { VersionBumpOptions } from '../types/version-bump-options'
 import { version } from '../../package.json'
 import { ExitCode } from './exit-code'
-import { usageText } from './help'
 
 /**
  * The parsed command-line arguments
@@ -19,7 +18,7 @@ export interface ParsedArgs {
 /**
  * Parses the command-line arguments
  */
-export function parseArgs(argv: string[]): ParsedArgs {
+export function parseArgs(): ParsedArgs {
   try {
     const cli = cac('bumpp')
 
@@ -39,7 +38,8 @@ export function parseArgs(argv: string[]): ParsedArgs {
       .option('-x, --execute <command>', 'Commands to execute after version bumps')
       .help()
 
-    const args = cli.parse(argv).options
+    const result = cli.parse()
+    const args = result.options
 
     const parsedArgs: ParsedArgs = {
       help: args.help as boolean,
@@ -79,6 +79,5 @@ export function parseArgs(argv: string[]): ParsedArgs {
 
 function errorHandler(error: Error): never {
   console.error(error.message)
-  console.error(usageText)
   return process.exit(ExitCode.InvalidArgument)
 }
