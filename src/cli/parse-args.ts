@@ -53,7 +53,7 @@ export function parseArgs(): ParsedArgs {
         all: args.all,
         confirm: !args.yes,
         noVerify: !args.verify,
-        files: args['--'],
+        files: [...args['--'] || [], ...result.args],
         ignoreScripts: args.ignoreScripts,
         execute: args.execute,
       },
