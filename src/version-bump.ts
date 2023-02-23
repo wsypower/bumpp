@@ -93,7 +93,7 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
 
 function printSummary(operation: Operation) {
   console.log()
-  console.log(`   files ${operation.options.files.map(i => c.bold(i)).join(', ')}`)
+  console.log(`   files ${operation.options.files.map(i => c.bold(i)).join('\n         ')}`)
   if (operation.options.commit)
     console.log(`  commit ${c.bold(formatVersionString(operation.options.commit.message, operation.state.newVersion))}`)
   if (operation.options.tag)
