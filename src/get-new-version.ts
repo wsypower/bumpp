@@ -1,4 +1,4 @@
-import { bold, green } from 'kleur'
+import c from 'picocolors'
 import prompts from 'prompts'
 import semver, { SemVer, clean as cleanVersion, valid as isValidVersion } from 'semver'
 import type { BumpRelease, PromptRelease } from './normalize-options'
@@ -90,17 +90,17 @@ async function promptForNewVersion(operation: Operation): Promise<Operation> {
     {
       type: 'autocomplete',
       name: 'release',
-      message: `Current version ${green(oldVersion)}`,
+      message: `Current version ${c.green(oldVersion)}`,
       initial: 'next',
       choices: [
-        { value: 'major', title: `${'major'.padStart(PADDING, ' ')} ${bold(next.major)}` },
-        { value: 'minor', title: `${'minor'.padStart(PADDING, ' ')} ${bold(next.minor)}` },
-        { value: 'patch', title: `${'patch'.padStart(PADDING, ' ')} ${bold(next.patch)}` },
-        { value: 'next', title: `${'next'.padStart(PADDING, ' ')} ${bold(next.next)}` },
-        { value: 'prepatch', title: `${'pre-patch'.padStart(PADDING, ' ')} ${bold(next.prepatch)}` },
-        { value: 'preminor', title: `${'pre-minor'.padStart(PADDING, ' ')} ${bold(next.preminor)}` },
-        { value: 'premajor', title: `${'pre-major'.padStart(PADDING, ' ')} ${bold(next.premajor)}` },
-        { value: 'none', title: `${'as-is'.padStart(PADDING, ' ')} ${bold(oldVersion)}` },
+        { value: 'major', title: `${'major'.padStart(PADDING, ' ')} ${c.bold(next.major)}` },
+        { value: 'minor', title: `${'minor'.padStart(PADDING, ' ')} ${c.bold(next.minor)}` },
+        { value: 'patch', title: `${'patch'.padStart(PADDING, ' ')} ${c.bold(next.patch)}` },
+        { value: 'next', title: `${'next'.padStart(PADDING, ' ')} ${c.bold(next.next)}` },
+        { value: 'prepatch', title: `${'pre-patch'.padStart(PADDING, ' ')} ${c.bold(next.prepatch)}` },
+        { value: 'preminor', title: `${'pre-minor'.padStart(PADDING, ' ')} ${c.bold(next.preminor)}` },
+        { value: 'premajor', title: `${'pre-major'.padStart(PADDING, ' ')} ${c.bold(next.premajor)}` },
+        { value: 'none', title: `${'as-is'.padStart(PADDING, ' ')} ${c.bold(oldVersion)}` },
         { value: 'custom', title: 'custom ...'.padStart(PADDING + 4, ' ') },
       ],
     },

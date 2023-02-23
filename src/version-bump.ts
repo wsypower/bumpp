@@ -1,6 +1,6 @@
 import * as ezSpawn from '@jsdevtools/ez-spawn'
-import { bold, cyan, green } from 'kleur'
-import { info, success } from 'log-symbols'
+import c from 'picocolors'
+import symbols from 'log-symbols'
 import prompts from 'prompts'
 import { getNewVersion } from './get-new-version'
 import { getOldVersion } from './get-old-version'
@@ -70,9 +70,9 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
   await updateFiles(operation)
 
   if (operation.options.execute) {
-    console.log(info, 'Executing script', operation.options.execute)
+    console.log(symbols.info, 'Executing script', operation.options.execute)
     await ezSpawn.async(operation.options.execute, { stdio: 'inherit' })
-    console.log(success, 'Script finished')
+    console.log(symbols.success, 'Script finished')
   }
 
   // Run npm version script, if any
@@ -93,18 +93,18 @@ export async function versionBump(arg: VersionBumpOptions | string = {}): Promis
 
 function printSummary(operation: Operation) {
   console.log()
-  console.log(`   files ${operation.options.files.map(i => bold(i)).join(', ')}`)
+  console.log(`   files ${operation.options.files.map(i => c.bold(i)).join(', ')}`)
   if (operation.options.commit)
-    console.log(`  commit ${bold(formatVersionString(operation.options.commit.message, operation.state.newVersion))}`)
+    console.log(`  commit ${c.bold(formatVersionString(operation.options.commit.message, operation.state.newVersion))}`)
   if (operation.options.tag)
-    console.log(`     tag ${bold(formatVersionString(operation.options.tag.name, operation.state.newVersion))}`)
+    console.log(`     tag ${c.bold(formatVersionString(operation.options.tag.name, operation.state.newVersion))}`)
   if (operation.options.execute)
-    console.log(` execute ${bold(operation.options.execute)}`)
+    console.log(` execute ${c.bold(operation.options.execute)}`)
   if (operation.options.push)
-    console.log(`    push ${cyan(bold('yes'))}`)
+    console.log(`    push ${c.cyan(c.bold('yes'))}`)
   console.log()
-  console.log(`    from ${bold(operation.state.oldVersion)}`)
-  console.log(`      to ${green(bold(operation.state.newVersion))}`)
+  console.log(`    from ${c.bold(operation.state.oldVersion)}`)
+  console.log(`      to ${c.green(c.bold(operation.state.newVersion))}`)
   console.log()
 }
 

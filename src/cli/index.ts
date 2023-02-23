@@ -1,4 +1,4 @@
-import { info, success } from 'log-symbols'
+import symbols from 'log-symbols'
 import { version as packageVersion } from '../../package.json'
 import type { VersionBumpProgress } from '../types/version-bump-progress'
 import { ProgressEvent } from '../types/version-bump-progress'
@@ -43,27 +43,27 @@ export async function main(): Promise<void> {
 function progress({ event, script, updatedFiles, skippedFiles, newVersion }: VersionBumpProgress): void {
   switch (event) {
     case ProgressEvent.FileUpdated:
-      console.log(success, `Updated ${updatedFiles.pop()} to ${newVersion}`)
+      console.log(symbols.success, `Updated ${updatedFiles.pop()} to ${newVersion}`)
       break
 
     case ProgressEvent.FileSkipped:
-      console.log(info, `${skippedFiles.pop()} did not need to be updated`)
+      console.log(symbols.info, `${skippedFiles.pop()} did not need to be updated`)
       break
 
     case ProgressEvent.GitCommit:
-      console.log(success, 'Git commit')
+      console.log(symbols.success, 'Git commit')
       break
 
     case ProgressEvent.GitTag:
-      console.log(success, 'Git tag')
+      console.log(symbols.success, 'Git tag')
       break
 
     case ProgressEvent.GitPush:
-      console.log(success, 'Git push')
+      console.log(symbols.success, 'Git push')
       break
 
     case ProgressEvent.NpmScript:
-      console.log(success, `Npm run ${script}`)
+      console.log(symbols.success, `Npm run ${script}`)
       break
   }
 }

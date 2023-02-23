@@ -112,7 +112,6 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
     ui = { input: process.stdin, output: process.stdout }
   }
   else {
-    // eslint-disable-next-line prefer-const
     let { input, output, ...other } = raw.interface
 
     if (input === true || (input !== false && !input))
@@ -129,4 +128,3 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
 
   return { release, commit, tag, push, files, cwd, interface: ui, ignoreScripts, execute }
 }
-
