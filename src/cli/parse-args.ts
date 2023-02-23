@@ -1,5 +1,6 @@
 import { valid as isValidVersion } from 'semver'
 import cac from 'cac'
+import c from 'picocolors'
 import { isReleaseType } from '../release-type'
 import type { VersionBumpOptions } from '../types/version-bump-options'
 import { version } from '../../package.json'
@@ -31,6 +32,7 @@ export function parseArgs(): ParsedArgs {
       .option('-t, --tag [tag]', 'Tag name', { default: true })
       .option('-p, --push', 'Push to remote', { default: true })
       .option('-y, --yes', 'Skip confirmation')
+      .option('-r, --recursive', 'Bump package.json files recursively', { default: false })
       .option('--no-verify', 'Skip git verification')
       .option('--ignore-scripts', 'Ignore scripts', { default: false })
       .option('-q, --quiet', 'Quiet mode')
@@ -56,6 +58,7 @@ export function parseArgs(): ParsedArgs {
         files: [...args['--'] || [], ...result.args],
         ignoreScripts: args.ignoreScripts,
         execute: args.execute,
+        recursive: !!args.recursive,
       },
     }
 
@@ -67,6 +70,14 @@ export function parseArgs(): ParsedArgs {
         parsedArgs.options.release = firstArg
         parsedArgs.options.files.shift()
       }
+    }
+
+    if (parsedArgs.options.recursive) {
+      if (parsedArgs.options.files?.length)
+        console.log(c.yellow('The --recursive option is ignored when files are specified'))
+
+      else
+        parsedArgs.options.files = ['package.json', 'package-lock.json', 'packages/**/package.json']
     }
 
     return parsedArgs

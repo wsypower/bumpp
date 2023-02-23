@@ -115,6 +115,13 @@ export interface VersionBumpOptions {
    * Excute additional command after bumping and before commiting
    */
   execute?: string
+
+  /**
+   * Bump the files recursively for monorepo. Only works without `files` option.
+   *
+   * @default false
+   */
+  recursive?: boolean
 }
 
 /**

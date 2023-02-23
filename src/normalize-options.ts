@@ -101,7 +101,13 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
     raw.files?.length
       ? raw.files
       : ['package.json', 'package-lock.json'],
-    { cwd, onlyFiles: true },
+    {
+      cwd,
+      onlyFiles: true,
+      ignore: [
+        '**/{.git,node_modules,bower_components,__tests__,fixtures,fixture}/**',
+      ],
+    },
   )
 
   let ui: Interface
