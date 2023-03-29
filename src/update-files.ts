@@ -1,4 +1,4 @@
-import * as path from 'path'
+import * as path from 'node:path'
 import { readJsonFile, readTextFile, writeJsonFile, writeTextFile } from './fs'
 import { isManifest } from './manifest'
 import type { Operation } from './operation'
