@@ -1,3 +1,4 @@
+/* eslint-disable antfu/no-const-enum */
 import type { VersionBumpResults } from './version-bump-results'
 
 /**

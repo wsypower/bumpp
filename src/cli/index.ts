@@ -1,3 +1,4 @@
+import process from 'node:process'
 import symbols from 'log-symbols'
 import { version as packageVersion } from '../../package.json'
 import type { VersionBumpProgress } from '../types/version-bump-progress'

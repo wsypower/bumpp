@@ -1,3 +1,4 @@
+import process from 'node:process'
 import * as ezSpawn from '@jsdevtools/ez-spawn'
 import c from 'picocolors'
 import symbols from 'log-symbols'

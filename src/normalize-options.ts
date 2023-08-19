@@ -1,3 +1,4 @@
+import process from 'node:process'
 import fg from 'fast-glob'
 import type { ReleaseType } from './release-type'
 import { isReleaseType } from './release-type'

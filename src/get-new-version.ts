@@ -1,3 +1,4 @@
+import process from 'node:process'
 import c from 'picocolors'
 import prompts from 'prompts'
 import semver, { SemVer, clean as cleanVersion, valid as isValidVersion } from 'semver'

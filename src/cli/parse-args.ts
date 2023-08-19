@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { valid as isValidVersion } from 'semver'
 import cac from 'cac'
 import c from 'picocolors'
