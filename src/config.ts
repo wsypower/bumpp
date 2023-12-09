@@ -14,8 +14,10 @@ export const bumpConfigDefaults: VersionBumpOptions = {
   files: [],
 }
 
-export async function loadBumpConfig(overrides?: Partial<VersionBumpOptions>,
-  cwd = process.cwd()) {
+export async function loadBumpConfig(
+  overrides?: Partial<VersionBumpOptions>,
+  cwd = process.cwd(),
+) {
   const { config } = await loadConfig<VersionBumpOptions>({
     name: 'bump',
     defaults: bumpConfigDefaults,

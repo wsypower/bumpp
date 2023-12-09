@@ -52,7 +52,8 @@ export async function gitTag(operation: Operation): Promise<Operation> {
     '--annotate',
 
     // Use the same commit message for the tag
-    '--message', formatVersionString(commit!.message, newVersion),
+    '--message',
+    formatVersionString(commit!.message, newVersion),
   ]
 
   // Create the Tag name

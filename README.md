@@ -13,7 +13,7 @@ Forked from [`version-bump-prompt`](https://github.com/JS-DevTools/version-bump-
 - Confirmation before bumping.
 - Enable `--commit` `--tag` `--push` by default. (opt-out by `--no-push`, etc.)
 - `-r` or `--recursive` to bump all packages in the monorepo.
-- Conventional Commits by default. 
+- Conventional Commits by default.
 - Supports config file `bumpp.config.ts`:
 
 ```ts
