@@ -1,4 +1,4 @@
-import type { SemVer } from 'semver'
+import type _semver from 'semver'
 import type { VersionBumpProgress } from './version-bump-progress'
 
 /**
@@ -127,7 +127,7 @@ export interface VersionBumpOptions {
   /**
    * Custom function to provide the version number
    */
-  customVersion?: (currentVersion: string, semver: typeof SemVer) => Promise<string | number>
+  customVersion?: (currentVersion: string, semver: typeof _semver) => Promise<string | void> | string | void
 }
 
 /**

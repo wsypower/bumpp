@@ -58,6 +58,7 @@ export interface NormalizedOptions {
   interface: Interface
   ignoreScripts: boolean
   execute?: string
+  customVersion?: VersionBumpOptions['customVersion']
 }
 
 /**
@@ -133,5 +134,16 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
   if (release.type === 'prompt' && !(ui.input && ui.output))
     throw new Error('Cannot prompt for the version number because input or output has been disabled.')
 
-  return { release, commit, tag, push, files, cwd, interface: ui, ignoreScripts, execute }
+  return {
+    release,
+    commit,
+    tag,
+    push,
+    files,
+    cwd,
+    interface: ui,
+    ignoreScripts,
+    execute,
+    customVersion: raw.customVersion,
+  }
 }
