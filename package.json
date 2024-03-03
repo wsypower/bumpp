@@ -1,6 +1,6 @@
 {
   "name": "bumpp",
-  "version": "9.3.0",
+  "version": "9.3.1",
   "packageManager": "pnpm@8.15.4",
   "description": "Bump version, commit changes, tag, and push to Git",
   "author": {
