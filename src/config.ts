@@ -18,11 +18,18 @@ export async function loadBumpConfig(
   overrides?: Partial<VersionBumpOptions>,
   cwd = process.cwd(),
 ) {
+  const { config: bumppConfig } = await loadConfig<VersionBumpOptions>({
+    name: 'bumpp',
+    overrides: {
+      ...(overrides as VersionBumpOptions),
+    },
+    cwd,
+  })
   const { config } = await loadConfig<VersionBumpOptions>({
     name: 'bump',
     defaults: bumpConfigDefaults,
     overrides: {
-      ...(overrides as VersionBumpOptions),
+      ...(bumppConfig!),
     },
     cwd,
   })
