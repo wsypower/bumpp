@@ -59,6 +59,7 @@ export interface NormalizedOptions {
   ignoreScripts: boolean
   execute?: string
   customVersion?: VersionBumpOptions['customVersion']
+  currentVersion?: string
 }
 
 /**
@@ -145,5 +146,6 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
     ignoreScripts,
     execute,
     customVersion: raw.customVersion,
+    currentVersion: raw.currentVersion,
   }
 }

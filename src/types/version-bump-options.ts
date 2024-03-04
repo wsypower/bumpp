@@ -17,6 +17,12 @@ export interface VersionBumpOptions {
   release?: string
 
   /**
+   * The current version number to be bumpped.
+   * If not provide, it will be read from the first file in the `files` array.
+   */
+  currentVersion?: string
+
+  /**
    * The prerelease type (e.g. "alpha", "beta", "next").
    *
    * Defaults to "beta".

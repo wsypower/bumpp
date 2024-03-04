@@ -85,15 +85,15 @@ async function updateManifestFile(relPath: string, operation: Operation): Promis
  */
 async function updateTextFile(relPath: string, operation: Operation): Promise<boolean> {
   const { cwd } = operation.options
-  const { oldVersion, newVersion } = operation.state
+  const { currentVersion, newVersion } = operation.state
   const modified = false
 
   const file = await readTextFile(relPath, cwd)
 
   // Only update the file if it contains at least one occurrence of the old version
-  if (file.data.includes(oldVersion)) {
+  if (file.data.includes(currentVersion)) {
     // Escape all non-alphanumeric characters in the version
-    const sanitizedVersion = oldVersion.replace(/(\W)/g, '\\$1')
+    const sanitizedVersion = currentVersion.replace(/(\W)/g, '\\$1')
 
     // Replace occurrences of the old version number that are surrounded by word boundaries.
     // This ensures that it matches "1.23.456" or "v1.23.456", but not "321.23.456".

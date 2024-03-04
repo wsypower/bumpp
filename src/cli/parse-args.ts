@@ -42,6 +42,7 @@ export async function parseArgs(): Promise<ParsedArgs> {
         noVerify: !args.verify,
         files: [...(args['--'] || []), ...resultArgs],
         ignoreScripts: args.ignoreScripts,
+        currentVersion: args.currentVersion,
         execute: args.execute,
         recursive: !!args.recursive,
       }),
@@ -113,6 +114,7 @@ export function loadCliArgs(argv = process.argv) {
     .option('--ignore-scripts', `Ignore scripts (default: ${bumpConfigDefaults.ignoreScripts})`)
     .option('-q, --quiet', 'Quiet mode')
     .option('-v, --version <version>', 'Target version')
+    .option('--current-version <version>', 'Current version')
     .option('-x, --execute <command>', 'Commands to execute after version bumps')
     .help()
 
