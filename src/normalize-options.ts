@@ -78,7 +78,7 @@ export async function normalizeOptions(raw: VersionBumpOptions): Promise<Normali
   if (!raw.release || raw.release === 'prompt')
     release = { type: 'prompt', preid }
 
-  else if (isReleaseType(raw.release))
+  else if (isReleaseType(raw.release) || raw.release === 'next')
     release = { type: raw.release, preid }
 
   else

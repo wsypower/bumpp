@@ -36,7 +36,12 @@ export async function getNewVersion(operation: Operation): Promise<Operation> {
  */
 function getNextVersion(oldVersion: string, bump: BumpRelease): string {
   const oldSemVer = new SemVer(oldVersion)
-  const newSemVer = oldSemVer.inc(bump.type as any, bump.preid)
+
+  const type = bump.type === 'next'
+    ? oldSemVer.prerelease.length ? 'prerelease' : 'patch'
+    : bump.type
+
+  const newSemVer = oldSemVer.inc(type, bump.preid)
 
   if (
     isPrerelease(bump.type)
@@ -58,7 +63,7 @@ function getNextVersion(oldVersion: string, bump: BumpRelease): string {
 /**
  * Returns the next version number for all release types.
  */
-function getNextVersions(oldVersion: string, preid: string): Record<ReleaseType | 'next', string> {
+function getNextVersions(oldVersion: string, preid: string): Record<ReleaseType, string> {
   const next: Record<string, string> = {}
 
   const parse = semver.parse(oldVersion)
@@ -66,11 +71,7 @@ function getNextVersions(oldVersion: string, preid: string): Record<ReleaseType 
     preid = parse?.prerelease[0] || 'preid'
 
   for (const type of releaseTypes)
-    next[type] = semver.inc(oldVersion, type, preid)!
-
-  next.next = parse?.prerelease?.length
-    ? semver.inc(oldVersion, 'prerelease', preid)!
-    : semver.inc(oldVersion, 'patch')!
+    next[type] = getNextVersion(oldVersion, { type, preid })
 
   return next
 }
@@ -121,7 +122,7 @@ async function promptForNewVersion(operation: Operation): Promise<Operation> {
       },
     },
   ]) as {
-    release: ReleaseType | 'next' | 'none' | 'custom' | 'config'
+    release: ReleaseType | 'none' | 'custom' | 'config'
     custom?: string
   }
 
